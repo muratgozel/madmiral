@@ -1,6 +1,6 @@
 {
   "name": "madmiral",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "Madmiral is a node.js library for sending email and sms with templates and multiple SDK clients support.",
   "main": "lib/index.js",
   "scripts": {
@@ -26,11 +26,11 @@
   },
   "homepage": "https://github.com/muratgozel/madmiral#readme",
   "dependencies": {
-    "aws-sdk": "^2.809.0",
-    "basekits": "^1.2.1",
-    "event-emitter-object": "^1.1.4",
-    "googleapis": "^66.0.0",
-    "messagebird": "^3.5.0",
+    "aws-sdk": "^2.858.0",
+    "basekits": "^1.2.4",
+    "event-emitter-object": "^4.0.2",
+    "googleapis": "^67.1.1",
+    "messagebird": "^3.6.0",
     "mimetext": "^0.2.2"
   },
   "devDependencies": {
