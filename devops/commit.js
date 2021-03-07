@@ -99,7 +99,7 @@ cli
       branch: {
         alias: 'b',
         describe: 'The branch name you are committing.',
-        default: 'main'
+        default: 'master'
       },
       publish: {
         alias: 'p',
