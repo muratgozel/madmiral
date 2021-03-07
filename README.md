@@ -1,18 +1,24 @@
 # Madmiral
-Your message will be sent, whatever it takes. Madmiral is a node.js library for sending email and sms with templates and multiple SDK clients support.
+Madmiral is a node.js library for sending email and SMS through multiple SDK clients with templates support.
 
 ## Install
-```
+```sh
 npm i madmiral
 ```
 
 ## Configuration & Supported Clients
+Supported clients are
 
-Supported clients are [AWS-SES][13e5593a] (Email), [Google Gmail][fb6f016b] (Email) and [Messagebird][46697165] (SMS).
+1. [AWS-SES][13e5593a] (Email),
+2. [Google Gmail][fb6f016b] (Email)
+3. [Messagebird][46697165] (SMS)
+4. [Verimor](47697165) (SMS)
+5. Write one more and make a pull request?
 
   [13e5593a]: https://aws.amazon.com/ses/ "AWS Simple Email Service"
   [fb6f016b]: https://developers.google.com/gmail/api "Google Gmail API"
   [46697165]: https://messagebird.com/ "Messagebird SMS"
+  [47697165]: https://verimor.com.tr "Verimor SMS"
 
 Create a configuration with the clients you would like to use:
 
@@ -37,58 +43,53 @@ const config = {
     subject: 'EMAIL_ADDRESS'
   },
   messagebird: {
-    /*
-    * Set MESSAGEBIRD_ACCESS_KEY environment variable
-    * with appropriate value.
-    */
+    accessKey: 'ACCESS_KEY' // or set env var MESSAGEBIRD_ACCESS_KEY
 
     // Get the origin that you are authorized to use from messagebird.
     origin: 'SMS_SENDER_NAME'
+  },
+  verimor: {
+    username: "",
+    password: "",
+    origin: ""
   }
 }
 ```
 
-## Initiate Library
-Initiation is the process of validating clients with the given configuration, therefore it returns a promise.
-
+## Usage
+Send a simple email and sms. Multiple services may be configured. Madmiral will try the other one if one fails.
 ```js
-const Madmiral = require('madmiral')
+const madmiral = require('madmiral')
 
-const madmiral = new Madmiral()
+madmiral.configure(config)
 
-madmiral
-  .init(config)
-  .then(function() {
-    // all clients ready.
+// lets create an email message
+const msg = madmiral.createEmailMessage({
+  sender: config.gmail.subject,
+  recipients: credentials.sampleEmailRecipients,
+  subject: 'Test',
+  message: 'Hi, this is a test email.'
+})
 
-    // send email or sms
-  })
-  .catch(function(err) {
-    // one of the clients failed to init.
-  })
-```
+// and create one sms message
+const smsmsg = madmiral.createSMSMessage({
+  recipients: credentials.sampleSMSRecipients,
+  message: 'Hi. This is a test sms.'
+})
 
-## Send An Email
-Simply:
+// send the email message
+madmiral.send(msg).then(function(result) {
+  // result.success === true
+})
 
-```js
-madmiral.sendEmail(sendEmailConfig, function(err, result) {
-  if (result.id) {
-    // your email sent!
-  }
-
-  if (err) {
-    // err is an array of errors that clients raised
-    // during trying to send your email.
-  }
+// send the sms
+madmiral.send(smsmsg).then(function(result) {
+  // result.success === true
 })
 ```
 
-It will try another client in the case of an error. To understand whether your email has been sent or not, check the `id` of the `result` object.
-
-Madmiral supports many options such as multiple attachments and recipients when sending an email.
-
-Let's first define some example values:
+### Creating Messages
+Multiple attachments and recipients are supported in email messages thanks to [mimetext](https://github.com/muratgozel/MIMEText) library.
 ```js
 const personA = 'test@test.com'
 const personB = {name: 'Fullname', addr: 'test@test.com'}
@@ -106,8 +107,7 @@ const attachmentA = {
 }
 const attachmentList = [attachmentA]
 ```
-
-Email send configuration reference:
+**Email message parameters reference:**
 
 Parameter  |  Description  |  Possible Values
 --|--|--
@@ -117,27 +117,18 @@ subject  |  Subject of the email.  |  `subject`
 message  |  Content of the email.  |  `messageA` or `messageB`
 attachments  |  Files will be attached to email.  |  `attachmentA` or `attachmentList`
 
-## Send An SMS
-Simply:
-
-```js
-madmiral.sendSMS(sendSMSConfig, function(err, result) {
-  if (result.id) {
-    // your sms sent!
-  }
-
-  if (err) {
-    // err is an array of errors that clients raised
-    // during trying to send your sms.
-  }
-})
-```
-
-It will try another client in the case of an error. To understand whether your sms has been sent or not, check the `id` of the `result` object.
-
-SMS send configuration reference:
+**SMS message parameters reference:**
 
 Parameter  |  Description  |  Possible Values
 --|--|--
 message  |  Sender of the email.  |  `Hey!`
 recipients  |  Recipients of the sms.  |  `+901234567890` or Array of `+901234567890`.
+
+## Tests
+Tests are written in tests folder and can be run with `npm test`. You need to create your own credentials file in `credentials/credentials.json`
+
+---
+
+Thanks for watching 🐬
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F1RFO7)
