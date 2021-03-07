@@ -5,15 +5,15 @@ const credentials = JSON.parse(fs.readFileSync('./credentials/credentials.json',
 
 assert.deepStrictEqual(typeof madmiral.send, 'function')
 
-process.env['GCLOUD_PROJECT'] = credentials.gmail.gcloudProject
-process.env['GOOGLE_APPLICATION_CREDENTIALS'] = credentials.gmail.applicationCredentials
+//process.env['GCLOUD_PROJECT'] = credentials.gmail.gcloudProject
+//process.env['GOOGLE_APPLICATION_CREDENTIALS'] = credentials.gmail.applicationCredentials
 process.env['AWS_ACCESS_KEY_ID'] = credentials.aws.accessKeyID
 process.env['AWS_SECRET_ACCESS_KEY'] = credentials.aws.secretAccessKey
 
 const config1 = {
-  gmail: {
+  /*gmail: {
     subject: credentials.gmail.subject
-  },
+  },*/
   awsses: {
     region: 'eu-west-1'
   }
@@ -21,7 +21,7 @@ const config1 = {
 madmiral.configure(config1)
 
 const msg = madmiral.createEmailMessage({
-  sender: config1.gmail.subject,
+  sender: credentials.gmail.subject,
   recipients: credentials.sampleEmailRecipients,
   subject: 'Test',
   message: 'Hi, this is a test email.'
@@ -32,7 +32,7 @@ madmiral.send(msg).then(function(r) {
 }).catch(function(err) {
   console.log('err:', err)
 })
-
+/*
 config1.messagebird = credentials.messagebird
 config1.verimor = credentials.verimor
 madmiral.configure(config1)
@@ -44,3 +44,4 @@ const smsmsg = madmiral.createSMSMessage({
 madmiral.send(smsmsg).then(function(r) {
   console.log('result:', r)
 })
+*/

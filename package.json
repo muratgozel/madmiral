@@ -1,6 +1,6 @@
 {
   "name": "madmiral",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Madmiral is a node.js library for sending email and SMS through multiple SDK clients with templates support.",
   "main": "lib/index.js",
   "scripts": {
