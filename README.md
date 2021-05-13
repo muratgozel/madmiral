@@ -31,7 +31,9 @@ const config = {
     */
 
     // The region of the AWS-SES service. 'eu-west-1' for example.
-    region: 'REGION_NAME'
+    region: 'REGION_NAME',
+    // Sender address authorized inside in AWS-SES.
+    sender: 'EMAIL_ADDRESS'
   },
   gmail: {
     /*
@@ -40,7 +42,7 @@ const config = {
     */
 
     // The sender. The email address which actually exist in your domain.
-    subject: 'EMAIL_ADDRESS'
+    sender: 'EMAIL_ADDRESS'
   },
   messagebird: {
     accessKey: 'ACCESS_KEY' // or set env var MESSAGEBIRD_ACCESS_KEY
@@ -51,7 +53,7 @@ const config = {
   verimor: {
     username: "",
     password: "",
-    origin: ""
+    origin: "SMS_SENDER_NAME"
   }
 }
 ```
