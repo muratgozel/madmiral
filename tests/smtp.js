@@ -3,12 +3,9 @@ const assert = require('assert')
 const madmiral = require('../lib')
 const credentials = JSON.parse(fs.readFileSync('./credentials/credentials.json', 'utf8'))
 
-async function testAwsSes() {
+async function testSmtp() {
   delete credentials.gmail
-  delete credentials.smtp
-
-  process.env['AWS_ACCESS_KEY_ID'] = credentials.awsses.accessKeyID
-  process.env['AWS_SECRET_ACCESS_KEY'] = credentials.awsses.secretAccessKey
+  delete credentials.awsses
 
   madmiral.configure(credentials)
 
@@ -29,4 +26,4 @@ async function testAwsSes() {
   return result
 }
 
-testAwsSes()
+testSmtp()

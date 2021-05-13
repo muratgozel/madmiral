@@ -5,6 +5,7 @@ const credentials = JSON.parse(fs.readFileSync('./credentials/credentials.json',
 
 async function testGmail() {
   delete credentials.awsses
+  delete credentials.smtp
 
   process.env['GCLOUD_PROJECT'] = credentials.gmail.gcloudProject
   process.env['GOOGLE_APPLICATION_CREDENTIALS'] = credentials.gmail.applicationCredentials
